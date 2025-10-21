@@ -1,0 +1,64 @@
+services:
+  # PostgreSQL database for MLflow backend store
+  postgres:
+    image: postgres:15
+    container_name: mlflow-postgres
+    environment:
+      - POSTGRES_USER=mlflow
+      - POSTGRES_PASSWORD=mlflow
+      - POSTGRES_DB=mlflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mlflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # MLflow tracking server
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlflow
+    container_name: mlflow-server
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_artifacts:/mlflow/artifacts
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=postgresql://mlflow:mlflow@postgres:5432/mlflow
+      - MLFLOW_ARTIFACT_ROOT=/mlflow/artifacts
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # Model training with MLflow tracking
+  train:
+    build:
+      context: .
+      dockerfile: Dockerfile.train
+    container_name: titanic-training
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    volumes:
+      - ./kaggle.json:/root/.kaggle/kaggle.json:ro
+      - mlflow_artifacts:/mlflow/artifacts
+    environment:
+      - PYTHONUNBUFFERED=1
+      - KAGGLE_CONFIG_DIR=/root/.kaggle
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    restart: on-failure:3
+
+volumes:
+  postgres_data:
+  mlflow_artifacts:
+

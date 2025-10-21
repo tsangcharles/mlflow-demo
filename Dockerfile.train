@@ -1,0 +1,17 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy training script
+COPY src/train.py /app/
+
+# Create necessary directories
+RUN mkdir -p /app/models /app/data /root/.kaggle
+
+# Run training script
+CMD ["python", "train.py"]
+
