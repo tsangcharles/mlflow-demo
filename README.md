@@ -1,4 +1,4 @@
-# MLflow Model Management Demo# MLflow Model Management Demo - Titanic Survival Prediction# Titanic Survival Prediction - Docker Demo
+# MLflow Model Management Demo
 
 
 
@@ -6,27 +6,16 @@ A hands-on demonstration of **MLflow** for experiment tracking, model versioning
 
 
 
-## 🎯 What You'll LearnA comprehensive demonstration of **MLflow** for model tracking, experiment management, and model registry using the Titanic dataset. This project showcases MLflow's key features in a fully Dockerized environment.A complete machine learning demo that trains a Random Forest classifier on the Titanic dataset and deploys it as a REST API using FastAPI and Docker.
-
-
+## 🎯 Learning Objectives
 
 This demo teaches practical MLflow skills:
 
-
-
-- **Experiment Tracking** - Automatically log parameters, metrics, and artifacts## 🎯 Learning Objectives## 🎯 Project Overview
-
+- **Experiment Tracking** - Automatically log parameters, metrics, and artifacts
 - **Model Registry** - Version and manage models throughout their lifecycle  
-
 - **Run Comparison** - Compare multiple experiments side-by-side
-
 - **Reproducibility** - Track everything needed to recreate any experiment
-
-- **Production Workflows** - Use PostgreSQL backend and artifact storageThis demo teaches students:This project demonstrates:
-
+- **Production Workflows** - Use PostgreSQL backend and artifact storage
 - **Docker Integration** - Run MLflow in a containerized environment
-
-1. **MLflow Experiment Tracking** - Track multiple ML experiments with different algorithms1. **Training**: Downloads the Titanic dataset from Kaggle and trains a machine learning model
 
 ## 🏗️ Architecture
 
