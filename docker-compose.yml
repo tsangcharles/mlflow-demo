@@ -50,11 +50,10 @@ services:
       mlflow:
         condition: service_healthy
     volumes:
-      - ./kaggle.json:/root/.kaggle/kaggle.json:ro
       - mlflow_artifacts:/mlflow/artifacts
     environment:
       - PYTHONUNBUFFERED=1
-      - KAGGLE_CONFIG_DIR=/root/.kaggle
+      - KAGGLE_API_TOKEN=${KAGGLE_API_TOKEN:?Set KAGGLE_API_TOKEN in .env}
       - MLFLOW_TRACKING_URI=http://mlflow:5000
     restart: on-failure:3
 

@@ -7,7 +7,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install MLflow and database driver
-RUN pip install --no-cache-dir mlflow==2.9.2 psycopg2-binary==2.9.9
+RUN pip install --no-cache-dir mlflow==2.9.2 psycopg2-binary==2.9.9 "sqlalchemy<2.1"
 
 # Create artifacts directory
 RUN mkdir -p /mlflow/artifacts
