@@ -53,6 +53,8 @@ services:
       - mlflow_artifacts:/mlflow/artifacts
     environment:
       - PYTHONUNBUFFERED=1
+      # mlflow autolog imports all of sklearn, which trips setuptools' distutils shim
+      - SETUPTOOLS_USE_DISTUTILS=stdlib
       - KAGGLE_API_TOKEN=${KAGGLE_API_TOKEN:?Set KAGGLE_API_TOKEN in .env}
       - MLFLOW_TRACKING_URI=http://mlflow:5000
     restart: on-failure:3
